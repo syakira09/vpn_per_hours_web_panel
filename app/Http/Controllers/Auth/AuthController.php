@@ -28,8 +28,11 @@ class AuthController extends Controller
      *
      * @return void
      */
+    protected $redirectPath = '/verify';
+
     public function __construct()
     {
+
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
@@ -60,12 +63,15 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $confirmation_code = str_random(60);
+
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'country' => $data['country'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code' => $confirmation_code,
         ]);
     }
 }
