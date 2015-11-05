@@ -1,8 +1,9 @@
 @extends('auth')
 
+
 @section('content')
 
-
+   {{ $countryList = App\Country::lists('name', 'id')->all() }}
 
         <div class="row">
             {!! Form::open(['url' => 'register','class'=>'col s12']) !!}
@@ -16,7 +17,7 @@
                         {!! Form::text('last_name',null,['class'=>'validate']) !!}
                     </div>
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="input-field col s12">
                         <select name="country" id="country">
                             <option value="" disabled selected>Choose your country</option>
@@ -270,7 +271,8 @@
                         </select>
                         <label>Country</label>
                     </div>
-                </div>
+                </div>-->
+
                 <div class="row">
                     <div class="input-field col s12">
                         {!! Form::label('email','e-mail Address') !!}
