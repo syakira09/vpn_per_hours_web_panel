@@ -3,7 +3,8 @@
 
 @section('content')
 
-   {{ $countryList = App\Country::lists('name', 'id')->all() }}
+
+<?php $countries = \Webpatser\Countries\Countries::lists('name','country_code') ?>
 
         <div class="row">
             {!! Form::open(['url' => 'register','class'=>'col s12']) !!}
@@ -17,6 +18,17 @@
                         {!! Form::text('last_name',null,['class'=>'validate']) !!}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {!! Form::label('country','Country') !!}
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+
+                            {!! Form::select('country', $countries, null, ['class' => 'validate'] ) !!}
+                        </div>
+                    </div>
                 <!--<div class="row">
                     <div class="input-field col s12">
                         <select name="country" id="country">
