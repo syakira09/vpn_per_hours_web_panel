@@ -18,14 +18,50 @@ class UserVerificationController extends Controller
 
     public function __construct(){
 
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
-    public function index()
+    public function verify($confirmationcode = Null)
     {
-
-        dd(User::first()->activated);
+        if($confirmationcode)
+        {
+            $user = User::where('confirmation_code',$confirmationcode)->first();
+            if($user){
+                if($user->activated){
+                    die("You already activated you account");
+                }
+                else{
+                    $user->update(['activated',1]);
+                    dd("Activado");
+                }
+                $user->update();
+            }
+            else{
+                dd("No user");
+            }
+            dd($user);
+            dd($confirmationcode);
+        }
+        else{
+            if(Auth::user())
+            {
+                if(Auth::user()->activate)
+                {
+                    die("YA estás dentro");
+                }
+                else
+                {
+                    die("Verifica tu cuenta");
+                }
+            }
+            else
+            {
+                die("No entras");
+            }
+        }
 
     }
+
+
 
 }

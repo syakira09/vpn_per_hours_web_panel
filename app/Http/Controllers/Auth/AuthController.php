@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -65,6 +66,16 @@ class AuthController extends Controller
     {
         $confirmation_code = str_random(60);
 
+        /*Mail::send('email/verification', ['confirmation_code' => $confirmation_code, 'data' => $data], function($message)
+        {
+            $message->to($data['email'], 'John Smith')->subject('Welcome!');
+        });*/
+        Mail::send('email.verification', ['confirmation_code' => $confirmation_code],function ($message) use($data) {
+            $message->from('admin@windmaker.net');
+            $message->subject("Verify your email address");
+            $message->to($data['email']);
+        });
+
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -73,5 +84,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
             'confirmation_code' => $confirmation_code,
         ]);
+
+
     }
 }

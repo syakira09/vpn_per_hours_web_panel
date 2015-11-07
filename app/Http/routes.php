@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('verify','UserVerificationController');
-
-
-
 Route::get('register', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
+
+Route::get('verify/{token?}','UserVerificationController@verify');
