@@ -1,4 +1,4 @@
-@extends('auth')
+@extends('email')
 
 @section('content')
     <h2>Please, verify Your Email Address</h2>

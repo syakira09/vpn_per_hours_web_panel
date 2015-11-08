@@ -137,7 +137,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
-	'Webpatser\Countries\CountriesServiceProvider',
+	    'Webpatser\Countries\CountriesServiceProvider',
 
         /*
          * Application Service Providers...

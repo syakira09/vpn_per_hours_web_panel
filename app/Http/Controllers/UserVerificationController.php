@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserVerificationController extends Controller
 {
@@ -31,10 +32,15 @@ class UserVerificationController extends Controller
                     die("You already activated you account");
                 }
                 else{
-                    $user->update(['activated',1]);
-                    dd("Activado");
+                    $data = User::where('confirmation_code',$confirmationcode)->first();
+                    User::where('confirmation_code',$confirmationcode)->update(['activated' => 1,'confirmation_code' => Null]);
+                    Mail::send('email.registered', [],function ($message) use($data) {
+                        $message->from('admin@windmaker.net');
+                        $message->subject("Verification succeded");
+                        $message->to($data['email']);
+                    });
+                    return view('auth.registered');
                 }
-                $user->update();
             }
             else{
                 dd("No user");
@@ -45,13 +51,13 @@ class UserVerificationController extends Controller
         else{
             if(Auth::user())
             {
-                if(Auth::user()->activate)
+                if(Auth::user()->activated)
                 {
-                    die("YA estás dentro");
+                    return Redirect::to('dashboard');
                 }
                 else
                 {
-                    die("Verifica tu cuenta");
+                    return view('auth.verify');
                 }
             }
             else
