@@ -12,13 +12,13 @@
         <a href="#!" class="brand-logo"><img src="images/lock.png"></a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="#!">Current VPN's</a></li>
+            <li><a href="{{ URL::to('dashboard')}}">Current VPN's</a></li>
             <li><a href="#!">Credit</a></li>
             <li><a href="#!">My account</a></li>
             <li><a href="{{ URL::to('logout')}}">Log out</a></li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
-            <li><a href="#!">Current VPN's</a></li>
+            <li><a href="{{ URL::to('dashboard')}}">Current VPN's</a></li>
             <li><a href="#!">Credit</a></li>
             <li><a href="#!">My account</a></li>
             <li><a href="{{ URL::to('logout')}}">Log out</a></li>
