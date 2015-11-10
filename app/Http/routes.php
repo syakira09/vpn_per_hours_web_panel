@@ -22,4 +22,5 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 
 Route::get('verify/{token?}','UserVerificationController@verify');
 
-Route::resource('dashboard','DashboardController');
+Route::get('dashboard','DashboardController@index');
+Route::get('vpnusers','DashboardController@showVpnUsers');

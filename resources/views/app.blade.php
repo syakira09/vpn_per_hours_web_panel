@@ -15,14 +15,14 @@
                     <li><a href="#!">Prcing</a></li>
                     <li><a href="#!">Features</a></li>
                     <li><a href="#!">Help</a></li>
-                    <li><a href="#!">Log In</a></li>
+                    <li><a href="{{ URL::to('login')}}">Log In</a></li>
                     <li><a href="{{ URL::to('register')}}">Sign up</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="#!">Prcing</a></li>
                     <li><a href="#!">Features</a></li>
                     <li><a href="#!">Help</a></li>
-                    <li><a href="#!">Log In</a></li>
+                    <li><a href="{{ URL::to('login')}}">Log In</a></li>
                     <li><a href="{{ URL::to('register')}}">Sign up</a></li>
                 </ul>
             </div>

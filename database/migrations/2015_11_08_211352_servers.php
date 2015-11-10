@@ -15,6 +15,7 @@ class Servers extends Migration
         Schema::create('severs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
+            $table->integer('machine_id');
             $table->string('zone');
             $table->string('true_zone');
             $table->string('provider');

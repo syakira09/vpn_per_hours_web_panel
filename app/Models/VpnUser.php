@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Server extends Model
 {
-    protected $table = 'servers';
+    protected $table = 'vpnusers';
 
     protected $fillable = [
-        'machine_id',
-        'user_id',
-        'zone',
-        'true_zone',
-        'provider'
+        'username',
+        'password',
+        'user_id'
     ];
 
     public function owner()
