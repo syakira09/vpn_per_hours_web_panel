@@ -15,6 +15,11 @@ class DashboardController extends Controller
 
     public function index()
     {
+        if(! Auth::user()->vpnusers()->count())
+        {
+            return redirect('vpnusers');
+        }
+
         return view('dashboard.index');
     }
 
