@@ -3,6 +3,10 @@
     <meta charset="UTF-8">
     <title>VPN hourly</title>
     <link rel="stylesheet" type="text/css" href="{{ URL::to('')}}/css/materialize.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ URL::to('')}}/js/bin/materialize.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -32,7 +36,6 @@
     @yield('content')
 </div>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="{{ URL::to('')}}/js/bin/materialize.js"></script>
+
 </body>
 </html>

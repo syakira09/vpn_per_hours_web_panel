@@ -9,7 +9,7 @@ class VpnUser extends Model
     protected $table = 'vpnusers';
 
     protected $fillable = [
-        'username',
+        'name',
         'password',
         'user_id'
     ];

@@ -20,6 +20,7 @@ class Servers extends Migration
             $table->string('true_zone');
             $table->string('provider');
             $table->float('time')->default(0);
+            $table->timestamps();
         });
 
         Schema::table('severs', function($table) {

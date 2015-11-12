@@ -17,6 +17,7 @@ class Vpnusers extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('name');
             $table->string('password', 60);
+            $table->timestamps();
         });
 
         Schema::table('vpnusers', function($table) {
