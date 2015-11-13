@@ -30,6 +30,7 @@
             </div>
         </div>
     @endif
+    @if($users->count() < 10)
     <p>Create a vpn user</p>
     {!! Form::open(['url' => 'vpnusers']) !!}
     <div class="row">
@@ -48,7 +49,9 @@
         <i class="material-icons right"></i>
     </button>
     {!! Form::close() !!}
-
+    @else
+        <p>You can only create 10 users</p>
+    @endif
     @if($error)
         <script>Materialize.toast('{{ $error }}', 4000)</script>
     @endif

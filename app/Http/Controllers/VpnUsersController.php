@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\VpnUser;
 use App\Http\Requests;
-use Symfony\Component\HttpFoundation\Request;
 
 class VpnUsersController extends Controller
 {
@@ -27,24 +25,28 @@ class VpnUsersController extends Controller
     {
         $error = "";
         $users = Auth::user()->vpnusers()->get();
-        foreach($users as $user)
-        {
-            if($request->name == $user->name)
-            {
-                $error = "You've already added a user with this name.";
-                return view('vpnusers.index')->with(compact('users','error'));
+        if($users->count()<10) {
+            foreach ($users as $user) {
+                if ($request->name == $user->name) {
+                    $error = "You've already added a user with this name.";
+                    return view('vpnusers.index')->with(compact('users', 'error'));
+                }
             }
+            $request['user_id'] = Auth::user()->id;
+            VpnUser::create($request->all());
+            $users = Auth::user()->vpnusers()->get();
+            return view('vpnusers.index')->with(compact('users', 'error'));
         }
-        $request['user_id'] = Auth::user()->id;
-        VpnUser::create($request->all());
-        $users = Auth::user()->vpnusers()->get();
-        return view('vpnusers.index')->with(compact('users','error'));
-
+        else
+        {
+            $error = "You can only create 10 users";
+            return view('vpnusers.index')->with(compact('users', 'error'));
+        }
     }
 
-    public function destroy(Request $request)
+    public function destroy($name)
     {
-        die("WOS");
+        Auth::user()->vpnusers()->where(['user_id' => Auth::user()->id])->where(['name' => $name])->delete();
     }
 
 }
