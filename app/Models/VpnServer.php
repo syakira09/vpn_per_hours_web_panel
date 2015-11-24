@@ -1,19 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Server extends Model
+class VpnServer extends Model
 {
     protected $table = 'servers';
 
     protected $fillable = [
-        'machine_id',
         'user_id',
         'zone',
-        'true_zone',
-        'provider'
+        'token'
     ];
 
     public function owner()

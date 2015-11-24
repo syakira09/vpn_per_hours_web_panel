@@ -32,6 +32,6 @@ class Vpnusers extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('vpnusers');
     }
 }

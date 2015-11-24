@@ -138,6 +138,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
 	    'Webpatser\Countries\CountriesServiceProvider',
+        'Zjango\Laracurl\LaracurlServiceProvider',
 
         /*
          * Application Service Providers...
@@ -198,6 +199,7 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Countries' => 'Webpatser\Countries\CountriesFacade',
+        'Laracurl'  =>  'Zjango\Laracurl\Facades\Laracurl',
     ],
 
 ];

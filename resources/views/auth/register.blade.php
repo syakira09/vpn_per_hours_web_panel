@@ -23,12 +23,12 @@
                         {!! Form::label('country','Country') !!}
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="input-field col s12">
+                <div class="row">
+                    <div class="input-field col s12">
 
-                            {!! Form::select('country', $countries, null, ['class' => 'validate'] ) !!}
-                        </div>
+                        {!! Form::select('country', $countries, null, ['class' => 'validate'] ) !!}
                     </div>
+                </div>
                 <div class="row">
                     <div class="input-field col s12">
                         {!! Form::label('email','e-mail Address') !!}

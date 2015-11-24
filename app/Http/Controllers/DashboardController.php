@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VpnServer;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,6 +12,7 @@ class DashboardController extends Controller
     {
 
         $this->middleware('auth');
+        $this->middleware('verify');
     }
 
     public function index()
@@ -19,8 +21,9 @@ class DashboardController extends Controller
         {
             return redirect('vpnusers');
         }
-
-        return view('dashboard.index');
+        $servers = VpnServer::where(['user_id' => Auth::user()->id ])->get();
+        //return view('dashboard.index')->with(compact('servers'));
+        return view('dashboard.index')->with(compact('servers'));
     }
 
     public function showVpnUsers()

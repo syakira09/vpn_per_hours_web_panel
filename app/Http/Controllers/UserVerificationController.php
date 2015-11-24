@@ -63,7 +63,7 @@ class UserVerificationController extends Controller
             }
             else
             {
-                die("No entras");
+                return Redirect::to('login');
             }
         }
 

@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'country','email', 'password','confirmation_code'];
+    protected $fillable = ['first_name', 'last_name', 'country','email', 'password','confirmation_code','username'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function servers()
     {
-        return $this->hasMany('App\Models\Server');
+        return $this->hasMany('App\Models\VpnServer');
     }
 
     public function vpnusers()

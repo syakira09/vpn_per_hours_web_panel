@@ -49,8 +49,8 @@ class AuthController extends Controller
 
 
         return Validator::make($data, [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
+            'first_name' => 'required|max:255|min:2',
+            'last_name' => 'required|max:255|min:2',
             'email' => 'required|email|max:255|unique:users',
             'country' => 'required',
             'password' => 'required|confirmed|min:8',
@@ -66,6 +66,17 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $confirmation_code = str_random(60);
+        $username = explode('@',$data['email'])[0];
+        $counter=1;
+        if( User::where(['username' => $username])->count() !=0 ){
+            $username_candidate = $username.(string)$counter;
+            while(User::where(['username' => $username_candidate])->count() !=0)
+            {
+                $counter = $counter +1;
+                $username_candidate = $username.(string)$counter;
+            }
+            $username = $username_candidate;
+        }
 
         /*Mail::send('email/verification', ['confirmation_code' => $confirmation_code, 'data' => $data], function($message)
         {
@@ -82,6 +93,7 @@ class AuthController extends Controller
             'last_name' => $data['last_name'],
             'country' => $data['country'],
             'email' => $data['email'],
+            'username' =>  $username,
             'password' => bcrypt($data['password']),
             'confirmation_code' => $confirmation_code,
         ]);

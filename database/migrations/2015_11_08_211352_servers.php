@@ -12,18 +12,22 @@ class Servers extends Migration
      */
     public function up()
     {
-        Schema::create('severs', function (Blueprint $table) {
+        Schema::create('servers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('machine_id');
-            $table->string('zone');
-            $table->string('true_zone');
-            $table->string('provider');
+            $table->integer('machine_id')->nullable();
+            $table->string('zone')->nullable();
+            $table->string('true_zone')->nullable();
+            $table->string('provider')->nullable();
+            $table->string('status')->nullable();
+            $table->string('name');
+            $table->string('ip')->nullable();
+            $table->string('token');
             $table->float('time')->default(0);
             $table->timestamps();
         });
 
-        Schema::table('severs', function($table) {
+        Schema::table('servers', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
 

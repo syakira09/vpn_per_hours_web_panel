@@ -12,6 +12,7 @@ class VpnUsersController extends Controller
     {
 
         $this->middleware('auth');
+        $this->middleware('verify');
     }
 
     public function index()
