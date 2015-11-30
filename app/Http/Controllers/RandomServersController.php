@@ -117,14 +117,16 @@ class RandomServersController extends Controller
         $response = Laracurl::get($test);
         VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first()->delete();
         $first = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first();
-        $test = Laracurl::get('http://paula.es.una.ninja:8888/enablerandomserver?token='.$first->token);
-        $response = Laracurl::get($test);
-        $status = $first->status;
-        while ($status != 'Running')
-        {
-            sleep(1);
-            $fisrt = $servers = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first();
-            $status = $fisrt->status;
+        if ($first) {
+            $test = Laracurl::get('http://paula.es.una.ninja:8888/enablerandomserver?token=' . $first->token);
+            $response = Laracurl::get($test);
+            $status = $first->status;
+            while ($status != 'Running') {
+                sleep(1);
+                $fisrt = $servers = VpnServer::where(['user_id' => Auth::user()->id, 'random' => 1])->first();
+                $status = $fisrt->status;
+            }
+
         }
         $randomServersInfo = RandomServer::where(['user_id' => Auth::user()->id])->first();
         $randomServersInfo->used += 1;
