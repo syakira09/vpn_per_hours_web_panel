@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VpnServer extends Model
+class RandomServer extends Model
 {
-    protected $table = 'servers';
+    protected $table = 'randomservers';
 
     protected $fillable = [
         'user_id',
-        'zone',
-        'token',
-        'random'
+        'number',
+        'requested',
+        'used'
     ];
 
     public function owner()

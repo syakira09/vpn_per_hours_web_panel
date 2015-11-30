@@ -22,6 +22,7 @@ class Servers extends Migration
             $table->string('status')->nullable();
             $table->string('name');
             $table->string('ip')->nullable();
+            $table->boolean('random')->default(0);
             $table->string('token');
             $table->float('time')->default(0);
             $table->timestamps();

@@ -27,10 +27,12 @@ class ServersController extends Controller
     {
         $request['user_id'] = Auth::user()->id;
         $request['token'] = str_random(60);
+        $token = $request['token'];
         VpnServer::create($request->all());
+        sleep(2);
         //$test= \Illuminate\Http\Request::create('http://paula.es.una.ninja:8888/createserver?token='.$request['token']);
         //$test->all();
-        $test = Laracurl::get('http://paula.es.una.ninja:8888/createserver?token='.$request['token']);
+        $test = Laracurl::get('http://paula.es.una.ninja:8888/createserver?token='.$token);
         $response = Laracurl::get($test);
         return redirect('dashboard');
     }

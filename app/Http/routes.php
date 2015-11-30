@@ -25,5 +25,11 @@ Route::get('verify/{token?}','UserVerificationController@verify');
 Route::get('dashboard','DashboardController@index');
 Route::resource('vpnusers','VpnUsersController');
 Route::resource('servers','ServersController');
+Route::resource('randomserver','RandomServersController');
+
 Route::post('poweroff','ServersController@powerOff');
 Route::post('poweron','ServersController@powerOn');
+
+Route::get('enablerandomserver','RandomServersController@enable');
+Route::get('disablerandomserver','RandomServersController@disable');
+Route::get('nextrandomserver','RandomServersController@nextserver');

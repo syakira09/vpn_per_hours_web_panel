@@ -47,4 +47,8 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Models\VpnUser');
     }
 
+    public function randomservers()
+    {
+        return $this->hasOne('App\Models\RandomServer');
+    }
 }
