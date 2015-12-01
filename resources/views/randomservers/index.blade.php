@@ -27,7 +27,7 @@
                 <p>Created Servers: {{$number}}/{{$requested}}</p>
                 <p>Used Servers: {{$used}}/{{$number}}</p>
                 <p>Status: {{$status}}</p>
-                <p>Url: {{$servers->first()->name}}</p>
+                <p>Url: {{App\Models\VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first()->name}}</p>
             </div>
             @if($number == $requested)
                 <div class="card-action" id="buttons">
