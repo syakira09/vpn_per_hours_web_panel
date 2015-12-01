@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                {!! Form::select('number_of_servers', [10, 20, 30, 40, 50], null, ['class' => 'validate'] ) !!}
+                {!! Form::select('number_of_servers', [10, 20], null, ['class' => 'validate'] ) !!}
             </div>
         </div>
         <button class="btn waves-effect waves-light" type="submit" name="submit">Create
@@ -27,6 +27,7 @@
                 <p>Created Servers: {{$number}}/{{$requested}}</p>
                 <p>Used Servers: {{$used}}/{{$number}}</p>
                 <p>Status: {{$status}}</p>
+                <p>Url: {{$servers->first()->name}}</p>
             </div>
             @if($number == $requested)
                 <div class="card-action" id="buttons">
