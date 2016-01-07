@@ -19,7 +19,8 @@ class VpnUsersController extends Controller
     {
         $error = ""; //Chapuza
         $users = Auth::user()->vpnusers()->where(['user_id' => Auth::user()->id])->get();
-        return view('vpnusers.index')->with(compact('users','error'));
+        $groups = Auth::user()->vpngroups()->where(['user_id' => Auth::user()->id])->get();
+        return view('vpnusers.index')->with(compact('users','groups','error'));
     }
 
     public function store(Requests\VpnUserRequest $request)
@@ -34,9 +35,11 @@ class VpnUsersController extends Controller
                 }
             }
             $request['user_id'] = Auth::user()->id;
+            $request->usename = $request->vpnusername ;
             VpnUser::create($request->all());
             $users = Auth::user()->vpnusers()->get();
-            return view('vpnusers.index')->with(compact('users', 'error'));
+            $groups = Auth::user()->vpngroups()->get();
+            return view('vpnusers.index')->with(compact('users','groups','error'));
         }
         else
         {

@@ -33,3 +33,15 @@ Route::post('poweron','ServersController@powerOn');
 Route::get('enablerandomserver','RandomServersController@enable');
 Route::get('disablerandomserver','RandomServersController@disable');
 Route::get('nextrandomserver','RandomServersController@nextserver');
+
+
+
+Route::post('/api/signin', function () {
+    $credentials = Input::only('email', 'password');
+
+    if ( ! $token = JWTAuth::attempt($credentials)) {
+        return Response::json(false, HttpResponse::HTTP_UNAUTHORIZED);
+    }
+
+    return Response::json(compact('token'));
+});

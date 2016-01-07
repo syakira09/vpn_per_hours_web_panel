@@ -55,6 +55,22 @@
     @if($error)
         <script>Materialize.toast('{{ $error }}', 4000)</script>
     @endif
+    @if( $users->count())
+        <div class="row">
+            <div class="col s12">
+                <h4>Groups</h4>
+            </div>
+            @if( $groups->count())
+            <div class="col s12 m6">
+                <ul class="collection">
+                    @foreach ($groups as $group)
+                        <li class="collection-item dismissable"><div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="checkDelete('{{ $group->name }}')">delete</i></a></div></li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </div>
+    @endif
 
     <script>
         function checkDelete(name) {

@@ -139,6 +139,8 @@ return [
         Illuminate\Html\HtmlServiceProvider::class,
 	    'Webpatser\Countries\CountriesServiceProvider',
         'Zjango\Laracurl\LaracurlServiceProvider',
+        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+
 
         /*
          * Application Service Providers...
@@ -200,6 +202,8 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Countries' => 'Webpatser\Countries\CountriesFacade',
         'Laracurl'  =>  'Zjango\Laracurl\Facades\Laracurl',
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'Barryvdh\Cors\ServiceProvider',
     ],
 
 ];

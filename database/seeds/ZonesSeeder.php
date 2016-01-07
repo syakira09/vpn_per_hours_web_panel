@@ -11,7 +11,7 @@ class ZonesSeeder extends Seeder
      */
     public function run()
     {
-        $zones = array('usa','germany','singapore','uk','amsterdam','canada');
+        $zones = array('USA','Germany','Singapore','United Kingdom','Netherlands','Canada');
         foreach ($zones as $zone)
         {
             DB::table('zones')->insert(
