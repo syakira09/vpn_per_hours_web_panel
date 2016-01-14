@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class VpnUser extends Model
 {
-    protected $table = 'vpnusers';
+    protected $table = 'vpnusersgroups';
 
     protected $fillable = [
-        'name',
-        'password',
+        'vpnuser_id',
+        'vpngroup_id',
         'user_id'
     ];
 

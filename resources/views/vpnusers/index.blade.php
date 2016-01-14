@@ -64,12 +64,33 @@
             <div class="col s12 m6">
                 <ul class="collection">
                     @foreach ($groups as $group)
-                        <li class="collection-item dismissable"><div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="checkDelete('{{ $group->name }}')">delete</i></a></div></li>
+                        <li class="collection-item dismissable"><div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="showModalTest()">perm_identity</i><i class="material-icons" onclick="checkDelete('{{ $group->name }}')">delete</i></a></div></li>
+                        <div id="modal1" class="modal">
+                            <div class="modal-content">
+                                <h4>Modal Header</h4>
+                                <p>A bunch of text</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                            </div>
+                        </div>
                     @endforeach
                 </ul>
             </div>
             @endif
         </div>
+        <p>Create a vpn group</p>
+        {!! Form::open(['url' => 'vpngroups']) !!}
+        <div class="row">
+            <div class="input-field col s6">
+                {!! Form::label('name','group name') !!}
+                {!! Form::text('name',null,['class'=>'validate']) !!}
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="submit">Create group
+            <i class="material-icons right"></i>
+        </button>
+        {!! Form::close() !!}
     @endif
 
     <script>
@@ -89,6 +110,11 @@
                 });
             }
         }
+
+        function showModalTest() {
+            $('#modal1').openModal();
+        }
+
     </script>
 
     @include('errors.list')

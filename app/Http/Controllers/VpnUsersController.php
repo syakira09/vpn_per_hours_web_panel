@@ -27,11 +27,12 @@ class VpnUsersController extends Controller
     {
         $error = "";
         $users = Auth::user()->vpnusers()->get();
+        $groups = Auth::user()->vpngroups()->get();
         if($users->count()<10) {
             foreach ($users as $user) {
                 if ($request->name == $user->name) {
                     $error = "You've already added a user with this name.";
-                    return view('vpnusers.index')->with(compact('users', 'error'));
+                    return view('vpnusers.index')->with(compact('users', 'groups','error'));
                 }
             }
             $request['user_id'] = Auth::user()->id;
@@ -44,7 +45,7 @@ class VpnUsersController extends Controller
         else
         {
             $error = "You can only create 10 users";
-            return view('vpnusers.index')->with(compact('users', 'error'));
+            return view('vpnusers.index')->with(compact('users','groups', 'error'));
         }
     }
 

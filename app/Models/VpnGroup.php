@@ -9,7 +9,8 @@ class VpnGroup extends Model
     protected $table = 'vpngroups';
 
     protected $fillable = [
-        'name'
+        'name',
+        'user_id'
     ];
 
     public function owner()

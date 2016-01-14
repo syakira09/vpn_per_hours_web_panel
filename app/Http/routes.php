@@ -24,6 +24,7 @@ Route::get('verify/{token?}','UserVerificationController@verify');
 
 Route::get('dashboard','DashboardController@index');
 Route::resource('vpnusers','VpnUsersController');
+Route::resource('vpngroups','VpnGroupsController');
 Route::resource('servers','ServersController');
 Route::resource('randomserver','RandomServersController');
 
