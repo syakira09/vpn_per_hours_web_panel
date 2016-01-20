@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VpnUser extends Model
+class VpnUsersGroups extends Model
 {
     protected $table = 'vpnusersgroups';
 
@@ -18,10 +18,6 @@ class VpnUser extends Model
     {
         return $this->belongsTo('App\User');
     }
-
-    public function vpnusersgroups()
-    {
-        return $this->hasMany('App\Models\VpnUsersGroups');
-    }
+    
 
 }

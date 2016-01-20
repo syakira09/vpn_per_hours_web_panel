@@ -36,4 +36,10 @@ class VpnGroupsController extends Controller
         }
 
     }
+
+    public function destroy($name)
+    {
+        Auth::user()->vpngroups()->where(['user_id' => Auth::user()->id])->where(['name' => $name])->delete();
+    }
+
 }
