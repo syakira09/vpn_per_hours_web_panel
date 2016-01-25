@@ -64,7 +64,7 @@
             <div class="col s12 m6">
                 <ul class="collection">
                     @foreach ($groups as $group)
-                        <li class="collection-item dismissable"><div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="showModalAddUsersToGroup()">perm_identity</i><i class="material-icons" onclick="showModalDeleteGroup('{{ $group->name }}')">delete</i></a></div></li>
+                        <li class="collection-item dismissable"><div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="showModalAddUsersToGroup({{ $group->id}})">perm_identity</i><i class="material-icons" onclick="showModalDeleteGroup('{{ $group->name }}')">delete</i></a></div></li>
 
                     @endforeach
                 </ul>
@@ -106,7 +106,8 @@
     <div id="modaladduserstoGroup" class="modal">
         <div class="modal-content">
             <h4>Add user to group</h4>
-            <p>Bla bla bla</p>
+            <ul id="availableusers">
+            </ul>
         </div>
         <div class="modal-footer" id="modaladdusergroupfooter">
         </div>
@@ -158,8 +159,25 @@
             });
         }
 
-        function showModalAddUsersToGroup() {
-            $('#modaladduserstoGroup').openModal();
+        function showModalAddUsersToGroup(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/vpngroups/getusers',
+                data: { id: id } ,
+                success: function(avalaibleUsers){
+                    $('#availableusers').html("");
+                    for (i = 0; i < avalaibleUsers.length; i++) {
+                        $('#availableusers').append('<li class="collection-item dismissable"><div>'+avalaibleUsers[i]['name']+'<a  class="secondary-content"><i class="material-icons">perm_identity</i></a></div></li>');
+                    }
+                    $('#modaladduserstoGroup').openModal();
+                }
+            });
+
         }
 
     </script>

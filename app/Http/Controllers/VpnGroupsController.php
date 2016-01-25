@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\VpnGroup;
 use App\Http\Requests;
@@ -40,6 +41,18 @@ class VpnGroupsController extends Controller
     public function destroy($name)
     {
         Auth::user()->vpngroups()->where(['user_id' => Auth::user()->id])->where(['name' => $name])->delete();
+    }
+
+    public function getVpnusers(Request $request)
+    {
+        $usersOfGroup = Auth::user()->vpngroups()->where('id',$request->id)->first()->users()->get()->toArray();
+        if($usersOfGroup == []){
+            return response()->json(Auth::user()->vpnusers()->get()->toArray());
+        }
+        else{
+
+        }
+
     }
 
 }
