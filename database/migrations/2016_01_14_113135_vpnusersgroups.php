@@ -13,23 +13,13 @@ class Vpnusersgroups extends Migration
     public function up()
     {
         Schema::create('vpnusersgroups', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('vpnuser_id')->unsigned();
-            $table->bigInteger('vpngroup_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('vpn_user_id')->unsigned()->index();
+            $table->foreign('vpn_user_id')->references('id')->on('vpnusers')->onDelete('cascade');
+            $table->bigInteger('vpn_group_id')->unsigned()->index();
+            $table->foreign('vpn_group_id')->references('id')->on('vpngroups')->onDelete('cascade');
             $table->timestamps();
-        });
-
-        Schema::table('vpnusersgroups', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
-        });
-
-        Schema::table('vpnusersgroups', function($table) {
-            $table->foreign('vpnuser_id')->references('id')->on('vpnusers');
-        });
-
-        Schema::table('vpnusersgroups', function($table) {
-            $table->foreign('vpngroup_id')->references('id')->on('vpngroups');
         });
 
     }
@@ -41,6 +31,6 @@ class Vpnusersgroups extends Migration
      */
     public function down()
     {
-        Schema::drop('vpnusersgroups');
+        Schema::drop('usersgroups');
     }
 }

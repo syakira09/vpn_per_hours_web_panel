@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="col s12 m4 l2"><p></p></div>
-        <div class="col s12 m4 l8"><p><a href="#!" class="btn waves-effect waves-teal">Re-send e-amil verification.</a></p></div>
+        <div class="col s12 m4 l8"><p><a href="#!" class="btn waves-effect waves-teal">Re-send e-mail verification.</a></p></div>
         <div class="col s12 m4 l2"><p></p></div>
     </div>
 @stop

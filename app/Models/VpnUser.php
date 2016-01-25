@@ -19,9 +19,9 @@ class VpnUser extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function vpnusersgroups()
+    public function groups()
     {
-        return $this->hasMany('App\Models\VpnUsersGroups');
+        return $this->belongsToMany('App\Models\VpnGroup','vpnusersgroups');
     }
 
 }
