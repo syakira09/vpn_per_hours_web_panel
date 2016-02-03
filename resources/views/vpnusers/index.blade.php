@@ -64,7 +64,20 @@
             <div class="col s12 m6">
                 <ul class="collection">
                     @foreach ($groups as $group)
-                        <li class="collection-item dismissable"><div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="showModalAddUsersToGroup({{ $group->id}})">perm_identity</i><i class="material-icons" onclick="showModalDeleteGroup('{{ $group->name }}')">delete</i></a></div></li>
+                        <li class="collection-item dismissable">
+                            <div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="showModalAddUsersToGroup({{ $group->id}})">perm_identity</i><i class="material-icons" onclick="showModalDeleteGroup('{{ $group->name }}')">delete</i></a>
+                                <ul>
+                                @foreach ($group->users()->get()->toArray() as $user)
+                                    <li>
+                                        <div class="chip">
+                                            {{  $user['name'] }}<i class="material-icons" >delete</i>
+                                        </div>
+
+                                    </li>
+                                @endforeach
+                                </ul>
+                            </div>
+                        </li>
 
                     @endforeach
                 </ul>
@@ -106,7 +119,7 @@
     <div id="modaladduserstoGroup" class="modal">
         <div class="modal-content">
             <h4>Add user to group</h4>
-            <ul id="availableusers">
+            <ul id="availableusers" class="collection">
             </ul>
         </div>
         <div class="modal-footer" id="modaladdusergroupfooter">
@@ -115,21 +128,24 @@
 
     <script>
 
-        function showModalDeleteUser(name) {
+        function showModalDeleteUser(name)
+        {
             $('#modaldeleteusertext').text('Do you really want to delete user '+ name + '?');
             $('#modaldeleteuserfooter').html('<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No</a>');
             $('#modaldeleteuserfooter').append('<a onclick=deleteVPNUser("'+name+'") class=" waves-effect waves-green btn-flat">Yes</a>');
             $('#modaldeleteuser').openModal();
         }
 
-        function showModalDeleteGroup(name) {
+        function showModalDeleteGroup(name)
+        {
             $('#modaldeletegrouptext').text('Do you really want to delete group '+ name + '?');
             $('#modaldeletegroupfooter').html('<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No</a>');
             $('#modaldeletegroupfooter').append('<a onclick=deleteVPNGroup("'+name+'") class=" waves-effect waves-green btn-flat">Yes</a>');
             $('#modaldeletegroup').openModal();
         }
 
-        function deleteVPNUser(name) {
+        function deleteVPNUser(name)
+        {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -144,7 +160,8 @@
             });
         }
 
-        function deleteVPNGroup(name) {
+        function deleteVPNGroup(name)
+        {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -159,7 +176,8 @@
             });
         }
 
-        function showModalAddUsersToGroup(id) {
+        function addUserToGroup(user_id, group_id)
+        {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -167,12 +185,32 @@
             });
             $.ajax({
                 type: 'POST',
-                url: '/vpngroups/getusers',
+                url: '/vpngroups/addusertogroup',
+                data: { user_id : user_id , group_id : group_id },
+                success: function(data) {
+                    window.location.href = "{{ URL::to('vpnusers')}}";
+                }
+            });
+        }
+
+        function showModalAddUsersToGroup(id)
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/vpngroups/availableusers',
                 data: { id: id } ,
                 success: function(avalaibleUsers){
                     $('#availableusers').html("");
-                    for (i = 0; i < avalaibleUsers.length; i++) {
-                        $('#availableusers').append('<li class="collection-item dismissable"><div>'+avalaibleUsers[i]['name']+'<a  class="secondary-content"><i class="material-icons">perm_identity</i></a></div></li>');
+                    if (avalaibleUsers.length > 0)
+                    {
+                        for (i = 0; i < avalaibleUsers.length; i++) {
+                            $('#availableusers').append('<li class="collection-item dismissable"><div>'+avalaibleUsers[i]['name']+'<a  class="secondary-content"><a onclick=addUserToGroup('+avalaibleUsers[i]['id']+','+id.toString()+') class=" waves-effect waves-green btn-flat">Add</a></a></div></li>');
+                        }
                     }
                     $('#modaladduserstoGroup').openModal();
                 }

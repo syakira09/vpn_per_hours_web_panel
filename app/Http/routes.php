@@ -24,8 +24,10 @@ Route::get('verify/{token?}','UserVerificationController@verify');
 
 Route::get('dashboard','DashboardController@index');
 Route::resource('vpnusers','VpnUsersController');
-Route::resource('vpngroups','VpnGroupsController');
-Route::post('vpngroups/getusers','VpnGroupsController@getVpnUsers');
+Route::resource('vpngroups','VpnGroupsController',['only' => ['store', 'destroy']]);
+Route::post('vpngroups/availableusers','VpnGroupsController@GetVpnUsers');
+Route::post('vpngroups/addusertogroup','VpnGroupsController@addVpnuserToGroup');
+
 Route::resource('servers','ServersController');
 Route::resource('randomserver','RandomServersController');
 

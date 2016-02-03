@@ -43,16 +43,53 @@ class VpnGroupsController extends Controller
         Auth::user()->vpngroups()->where(['user_id' => Auth::user()->id])->where(['name' => $name])->delete();
     }
 
-    public function getVpnusers(Request $request)
+    public function GetVpnUsers(Request $request)
     {
         $usersOfGroup = Auth::user()->vpngroups()->where('id',$request->id)->first()->users()->get()->toArray();
         if($usersOfGroup == []){
             return response()->json(Auth::user()->vpnusers()->get()->toArray());
         }
         else{
+            $users = Auth::user()->vpnusers()->get()->toArray();
+            $availableUsers = array();
+            //dd($users);
+            //dd($usersOfGroup);
 
+            foreach($users as $user)
+            {
+                //dd($user['id']);
+                //dd($usersOfGroup);
+                $insertado = 0;
+                foreach($usersOfGroup as $existingUser){
+                    if ( $existingUser['id'] == $user['id']){
+                        $insertado = 1;
+                        break;
+                    }
+                }
+                if ( $insertado == 0 )
+                {
+                    array_push($availableUsers, $user);
+                }
+            }
+            return response()->json($availableUsers);
         }
 
+    }
+
+    public function addVpnuserToGroup(Request $request)
+    {
+        $group = Auth::user()->vpngroups()->where('id', $request->group_id)->first();
+        $usersOfGroup = $group->users()->get(['id'])->toArray();
+        $userIDs = array();
+        foreach($usersOfGroup as $user){
+            array_push($userIDs, $user['id']);
+        }
+        if (in_array($request->user_id, $userIDs)) {
+            return 0;//The user is already in the group
+        } else {
+            $group->users()->attach($request->user_id,array('user_id' => Auth::user()->id));
+            return 1;
+        }
     }
 
 }
