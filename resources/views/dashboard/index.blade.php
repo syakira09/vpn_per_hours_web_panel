@@ -44,7 +44,7 @@
            </div>
        </div>
    @endif
-   <p>Create your first VPN server</p>
+   <p>Create VPN server</p>
    {!! Form::open(['url' => 'servers']) !!}
    <div class="row">
       <div class="input-field col s6">
@@ -56,12 +56,44 @@
          {!! Form::select('zone', $zones, null, ['class' => 'validate'] ) !!}
       </div>
    </div>
-   <button class="btn waves-effect waves-light" type="submit" name="submit">Create zone
-      <i class="material-icons right"></i>
-   </button>
+   <div class="row">
+       <p>VPN groups</p>
+       <div class="input-field col s6">
+           {!! Form::checkbox('addvpngroups',null, false,['id' => 'addvpngroups']) !!}
+           {!! Form::label('addvpngroups','Choose VPN groups',['onclick' => 'showGroups()']) !!}
+       </div>
+   </div>
+   <div class="row" id="vpngroups">
+
+   </div>
+   <div class="row">
+       <button class="btn waves-effect waves-light" type="submit" name="submit">Create zone
+          <i class="material-icons right"></i>
+       </button>
+   </div>
    {!! Form::close() !!}
    @include('errors.list')
     <script>
+
+        showgroups=0;
+
+        function showGroups()
+        {
+            if (showgroups)
+            {
+                showgroups = 0;
+                $( '#vpngroups').html('');
+            }
+            else{
+                showgroups =1;
+                $( '#vpngroups').html('');
+                @foreach($vpnGroups as $group)
+                    $( '#vpngroups').append('<input id="'+"{{$group->name}}"+'" name="'+"{{$group->name}}"+'" type="checkbox">');
+                    $( '#vpngroups').append('<label for="'+"{{$group->name}}"+'">'+"{{$group->name}}"+'</label>');
+                @endforeach
+
+            }
+        }
 
         function powerOff(token) {
 
@@ -151,32 +183,6 @@
             setInterval("retrieveServerData('{{$server->token}}')",1000);
         @endforeach
 
-/*
-            $.ajax({
-                type: 'GET',
-                url: '/servers/'+token,
-                context: document.body
-            }).done(function() {
-                $( this ).addClass( "done" );
-            });
-        }
-        /*
-        *         function checkDelete(name) {
-         if (confirm('Really delete?')) {
-         $.ajaxSetup({
-         headers: {
-         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-         }
-         });
-         $.ajax({
-         type: 'DELETE',
-         url: '/vpnusers/'+name,
-         success: function(){
-         window.location.href = "{{ URL::to('vpnusers')}}";
-         }
-         });
-         }
-         }
-         */
+
     </script>
 @stop

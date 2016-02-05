@@ -22,8 +22,10 @@ class DashboardController extends Controller
             return redirect('vpnusers');
         }
         $servers = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 0])->get();
+        $vpnGroups = Auth::user()->vpngroups()->get();
+        $numberOfGroups = $vpnGroups->count();
         //return view('dashboard.index')->with(compact('servers'));
-        return view('dashboard.index')->with(compact('servers'));
+        return view('dashboard.index')->with(compact('servers','vpnGroups','numberOfGroups'));
     }
 
     public function showVpnUsers()

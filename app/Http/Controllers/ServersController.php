@@ -28,6 +28,7 @@ class ServersController extends Controller
         $request['user_id'] = Auth::user()->id;
         $request['token'] = str_random(60);
         $token = $request['token'];
+        dd($request->all());
         VpnServer::create($request->all());
         sleep(2);
         //$test= \Illuminate\Http\Request::create('http://paula.es.una.ninja:8888/createserver?token='.$request['token']);

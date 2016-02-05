@@ -65,7 +65,12 @@
                 <ul class="collection">
                     @foreach ($groups as $group)
                         <li class="collection-item dismissable">
-                            <div>{{ $group->name }}<a  class="secondary-content"><i class="material-icons" onclick="showModalAddUsersToGroup({{ $group->id}})">perm_identity</i><i class="material-icons" onclick="showModalDeleteGroup('{{ $group->name }}')">delete</i></a>
+                            <div>{{ $group->name }}<a  class="secondary-content">
+                                    @if( $group->users()->get()->count() < $users->count())
+                                        <i class="material-icons" onclick="showModalAddUsersToGroup({{ $group->id}})">perm_identity</i>
+                                    @endif
+                                    <i class="material-icons" onclick="showModalDeleteGroup('{{ $group->name }}')">delete</i>
+                                </a>
                                 <ul>
                                 @foreach ($group->users()->get()->toArray() as $user)
                                     <li>
