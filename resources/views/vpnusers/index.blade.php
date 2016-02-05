@@ -69,8 +69,8 @@
                                 <ul>
                                 @foreach ($group->users()->get()->toArray() as $user)
                                     <li>
-                                        <div class="chip">
-                                            {{  $user['name'] }}<i class="material-icons" >delete</i>
+                                        <div>
+                                            {{  $user['name'] }}<i class="material-icons" onclick='showModalDeleteUsersFromGroup({{ $user['id'] }}, "{{ $user['name'] }}" , {{ $group->id }}, "{{ $group->name }}")'>not_interested</i>
                                         </div>
 
                                     </li>
@@ -123,6 +123,15 @@
             </ul>
         </div>
         <div class="modal-footer" id="modaladdusergroupfooter">
+        </div>
+    </div>
+
+    <div id="modaldeleteusersfromGroup" class="modal">
+        <div class="modal-content">
+            <h4>Delete user from group</h4>
+            <p id="modaldeleteuserformgrouptext"></p>
+        </div>
+        <div class="modal-footer" id="modaldeleteusergroupfooter">
         </div>
     </div>
 
@@ -216,6 +225,31 @@
                 }
             });
 
+        }
+
+        function deleteVPNUserFromGroup(user_id, group_id)
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/vpngroups/deleteuserfromgroup',
+                data: { user_id: user_id , group_id: group_id} ,
+                success: function(){
+                    window.location.href = "{{ URL::to('vpnusers')}}";
+                }
+            });
+        }
+
+        function showModalDeleteUsersFromGroup(user_id, user_name,group_id, group_name)
+        {
+            $('#modaldeleteuserformgrouptext').text('Do you really want to delete user "'+ user_name + '" from group "' + group_name + '"?');
+            $('#modaldeleteusergroupfooter').html('<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No</a>');
+            $('#modaldeleteusergroupfooter').append('<a onclick=deleteVPNUserFromGroup('+user_id+','+group_id+') class=" waves-effect waves-green btn-flat">Yes</a>');
+            $('#modaldeleteusersfromGroup').openModal();
         }
 
     </script>

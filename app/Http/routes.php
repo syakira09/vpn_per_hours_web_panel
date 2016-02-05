@@ -27,6 +27,7 @@ Route::resource('vpnusers','VpnUsersController');
 Route::resource('vpngroups','VpnGroupsController',['only' => ['store', 'destroy']]);
 Route::post('vpngroups/availableusers','VpnGroupsController@GetVpnUsers');
 Route::post('vpngroups/addusertogroup','VpnGroupsController@addVpnuserToGroup');
+Route::post('vpngroups/deleteuserfromgroup','VpnGroupsController@deleteVpnuserFromGroup');
 
 Route::resource('servers','ServersController');
 Route::resource('randomserver','RandomServersController');

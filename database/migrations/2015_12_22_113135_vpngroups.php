@@ -15,7 +15,6 @@ class Vpngroups extends Migration
         Schema::create('vpngroups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->string('users');
             $table->string('name');
             $table->timestamps();
         });

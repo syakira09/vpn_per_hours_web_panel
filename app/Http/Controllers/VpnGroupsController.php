@@ -92,4 +92,11 @@ class VpnGroupsController extends Controller
         }
     }
 
+    public function deleteVpnuserFromGroup(Request $request)
+    {
+        $group = Auth::user()->vpngroups()->find($request->group_id);
+        $group->users()->detach($request->user_id);
+        return 1;
+    }
+
 }
