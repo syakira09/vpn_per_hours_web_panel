@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\VpnServer;
 use App\Models\Zones;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -28,11 +29,40 @@ class ServersController extends Controller
         $request['user_id'] = Auth::user()->id;
         $request['token'] = str_random(60);
         $token = $request['token'];
-        dd($request->all());
-        VpnServer::create($request->all());
+        //check request for vpngroups
+        if ($request->has('addvpngroups')) {
+            $findSome = false;
+            $groups = Auth::user()->vpngroups()->get();
+            $groupsIds = array();
+            foreach($groups as $group)
+            {
+                if ( $request->has($group->name) )
+                {
+                    $findSome = true;
+                    array_push($groupsIds, $group->id );
+                }
+            }
+            if (  $findSome )
+            {
+                $server = VpnServer::create($request->all());
+                foreach($groupsIds as $id)
+                {
+                    $server->groups()->attach($id,array('user_id' => Auth::user()->id));
+                }
+            }
+            else{
+                $error = "You don't choose any vpn group, pelase select them or desselect the vpngroup option";
+                $servers = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 0])->get();
+                $vpnGroups = Auth::user()->vpngroups()->get();
+                $numberOfGroups = $vpnGroups->count();
+                return view('dashboard.index')->with(compact('servers','vpnGroups','numberOfGroups'))->withErrors($error);
+            }
+        }
+        else{
+            VpnServer::create($request->all());
+        }
+
         sleep(2);
-        //$test= \Illuminate\Http\Request::create('http://paula.es.una.ninja:8888/createserver?token='.$request['token']);
-        //$test->all();
         $test = Laracurl::get('http://paula.es.una.ninja:8888/createserver?token='.$token);
         $response = Laracurl::get($test);
         return redirect('dashboard');

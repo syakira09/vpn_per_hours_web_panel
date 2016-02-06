@@ -29,6 +29,20 @@
                                <p>Name: {{$server->name}}</p>
                                <p>Status: {{$server->status}}</p>
                            </div>
+                           @if( $server->groups->count() )
+                               <div class="card-content white-text">
+                                   <p>Allowed groups:</p>
+                                   <ul>
+                                       @foreach($server->groups as $group)
+                                           <li>{{$group->name}}</li>
+                                       @endforeach
+                                   </ul>
+                                </div>
+                           @else
+                               <div class="card-content white-text">
+                                   <p>All users allowed</p>
+                               </div>
+                           @endif
                            <div class="card-action" id="buttons-{{$server->token}}">
                                @if($server->status == 'Powered off')
                                    <a class="waves-effect waves-light btn-large green" onclick=powerOn("{{$server->token}}")>Power On</a><a class="waves-effect waves-light btn-large red" onclick=deleteServer("{{$server->token}}")>Delete</a>
@@ -75,7 +89,8 @@
    @include('errors.list')
     <script>
 
-        showgroups=0;
+
+
 
         function showGroups()
         {
@@ -182,6 +197,25 @@
         @foreach($servers as $server)
             setInterval("retrieveServerData('{{$server->token}}')",1000);
         @endforeach
+
+
+        if ( $('#addvpngroups').prop('checked') )
+        {
+            showgroups=1;
+            $( '#vpngroups').html('');
+            @foreach($vpnGroups as $group)
+                $( '#vpngroups').append('<input id="'+"{{$group->name}}"+'" name="'+"{{$group->name}}"+'" type="checkbox">');
+            $( '#vpngroups').append('<label for="'+"{{$group->name}}"+'">'+"{{$group->name}}"+'</label>');
+            @endforeach
+
+        }
+        else
+        {
+            showgroups=0;
+        }
+
+
+
 
 
     </script>

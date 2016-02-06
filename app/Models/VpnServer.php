@@ -20,7 +20,7 @@ class VpnServer extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function users()
+    public function groups()
     {
         return $this->belongsToMany('App\Models\VpnGroup','serversvpngroups')->withTimestamps();
     }
