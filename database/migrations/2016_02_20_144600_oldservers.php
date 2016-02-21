@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Servers extends Migration
+class OldServers extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,13 @@ class Servers extends Migration
      */
     public function up()
     {
-        Schema::create('servers', function (Blueprint $table) {
+        Schema::create('oldservers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->integer('machine_id')->nullable();
             $table->string('zone')->nullable();
             $table->string('true_zone')->nullable();
             $table->string('provider')->nullable();
-            $table->string('status')->nullable();
             $table->string('name');
             $table->string('ip')->nullable();
             $table->boolean('random')->default(0);
@@ -29,7 +28,7 @@ class Servers extends Migration
             $table->timestamps();
         });
 
-        Schema::table('servers', function($table) {
+        Schema::table('oldservers', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
 
@@ -42,6 +41,6 @@ class Servers extends Migration
      */
     public function down()
     {
-        Schema::drop('servers');
+        Schema::drop('oldservers');
     }
 }

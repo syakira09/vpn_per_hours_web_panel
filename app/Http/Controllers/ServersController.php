@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VpnServer;
+use App\Models\OldVpnServer;
 use App\Models\Zones;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -108,12 +109,16 @@ class ServersController extends Controller
         }
     }
 
+
     public function destroy($token)
     {
         $test = Laracurl::get('http://paula.es.una.ninja:8888/destroy?token='.$token);
         $response = Laracurl::get($test);
         sleep(5);
-        Auth::user()->servers()->where([ 'token' => $token])->delete();
+        $server = Auth::user()->servers()->where([ 'token' => $token])->first();
+        OldVpnServer::create($server->toArray());
+        $server->delete();
+        //Auth::user()->servers()->where([ 'token' => $token])->delete();
     }
 
 }

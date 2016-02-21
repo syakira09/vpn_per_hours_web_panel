@@ -46,10 +46,9 @@ class UserVerificationController extends Controller
             } else {
                 dd("No user");
             }
-            dd($user);
-            dd($confirmationcode);
+
         } else {
-            if (Auth::user()) {
+            if (Auth::check()) {
                 if (Auth::user()->activated) {
                     return Redirect::to('dashboard');
                 } else {

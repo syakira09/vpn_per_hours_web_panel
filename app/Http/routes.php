@@ -30,10 +30,13 @@ Route::post('vpngroups/addusertogroup','VpnGroupsController@addVpnuserToGroup');
 Route::post('vpngroups/deleteuserfromgroup','VpnGroupsController@deleteVpnuserFromGroup');
 
 Route::resource('servers','ServersController');
+
 Route::resource('randomserver','RandomServersController');
 
 Route::post('poweroff','ServersController@powerOff');
 Route::post('poweron','ServersController@powerOn');
+
+Route::get('bandwidth','ServerHandlerController@bandwidth');
 
 Route::get('enablerandomserver','RandomServersController@enable');
 Route::get('disablerandomserver','RandomServersController@disable');

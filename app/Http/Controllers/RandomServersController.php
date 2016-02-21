@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RandomServer;
 use App\Models\VpnServer;
+use App\Models\OldVpnServer;
 use App\Models\Zones;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
@@ -115,7 +116,13 @@ class RandomServersController extends Controller
         $server = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first();
         $test = Laracurl::get('http://paula.es.una.ninja:8888/destroy?token='.$server->token);
         $response = Laracurl::get($test);
-        VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first()->delete();
+
+        $server = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first();
+        OldVpnServer::create($server->toArray());
+        $server->delete();
+
+
+        //VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first()->delete();
         $first = VpnServer::where(['user_id' => Auth::user()->id , 'random' => 1])->first();
         if ($first) {
             $test = Laracurl::get('http://paula.es.una.ninja:8888/enablerandomserver?token=' . $first->token);
